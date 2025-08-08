@@ -1,0 +1,31 @@
+services:
+  n8n:
+    image: docker.n8n.io/n8nio/n8n:latest
+    restart: unless-stopped
+    ports:
+      - "${N8N_PORT:-5678}:5678"
+    environment:
+      - N8N_RUNNERS_ENABLED=${N8N_RUNNERS_ENABLED}
+    volumes:
+      - n8n_data:/home/node/.n8n
+
+  n8n_tunnel:
+    image: docker.n8n.io/n8nio/n8n:latest
+    restart: unless-stopped
+    ports:
+      - "${N8N_PORT:-5678}:5678"
+    environment:
+      - N8N_SECURE_COOKIE=${N8N_SECURE_COOKIE:-false}
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=${N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS:-true}
+      - N8N_TUNNEL_SUBDOMAIN=${N8N_TUNNEL_SUBDOMAIN:-farithadnan}
+      - N8N_HOST=${N8N_HOST:-farithadnan.n8n.cloud}
+      - N8N_RUNNERS_ENABLED=${N8N_RUNNERS_ENABLED:-true}
+      - N8N_EXPRESS_TRUST_PROXY=${N8N_EXPRESS_TRUST_PROXY:-true}
+      - N8N_EDITOR_BASE_URL=${N8N_EDITOR_BASE_URL:-https://farithadnan.n8n.cloud}
+    command: ["start", "--tunnel"]
+    volumes:
+          - n8n_data:/home/node/.n8n
+
+volumes:
+  n8n_data:
+    name: n8n_data
