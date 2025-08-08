@@ -23,10 +23,21 @@ docker compose up -d n8n
 docker compose up -d n8n_tunnel
 ```
 
-If you want to see the logs (like the interactive `-it` flags in your Docker command), run:
+**Access Options in Tunnel Mode:**
+- **Local access**: You can still access n8n locally at http://localhost:5678
+- **Public tunnel**: Check the container logs to see the auto-generated tunnel URL
+
+
+To see the logs and find the auto-generated tunnel URL:
 
 ```powershell
-docker compose logs -f n8n_tunnel
+docker compose logs -f n8n_tunnel
+```
+
+Look for a line in the logs that shows your tunnel URL, typically something like:
+
+```powershell
+Tunnel URL: https://your-auto-generated-subdomain.n8n.cloud
 ```
 
 #### Important: Tunnel Timeout Considerations
